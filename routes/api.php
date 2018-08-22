@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/fbcontent/getFbcontentsApi','FbcontentController@getFbcontentsApi');
+Route::post('/fbcontent/storeApi','FbcontentController@storeApi');
+Route::post('/image/uploadApi', 'ImageController@uploadImgFileApi');

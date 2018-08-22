@@ -16,7 +16,13 @@ window.Vue = require('vue');
  */
 
 Vue.component('example', require('./components/Example.vue'));
+Vue.component('feedback', require('./components/Feedback.vue'));
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import router from './router'
+Vue.use(ElementUI)
 
 const app = new Vue({
-    el: '#app'
+    el: '#ppp',
+    router
 });

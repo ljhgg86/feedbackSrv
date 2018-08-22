@@ -43,3 +43,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/show/{id}', 'HomeController@show')->name('home.show');
+Route::get('/feedbackClt',function(){
+    return view('feedbackClt');
+});

@@ -9,7 +9,7 @@ class ImageController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
     public function uploadImgFile(Request $request)
     {
@@ -19,7 +19,7 @@ class ImageController extends Controller
         $imageCounts=$_POST['imageCounts'];
         $files=$_FILES['files'];
         if(($imageCounts+count($files['name']))>5){
-        	return response()->json(['errors' => '最多只能总共5张图片!']);
+            return response()->json(['errors' => '最多只能总共5张图片!']);
         }
         //$files3=$request->all();
         foreach($files['type'] as $key=>$fileType){
@@ -48,6 +48,35 @@ class ImageController extends Controller
                 'imageSrcs' =>$imageSrcs,
                 'imageCounts' =>$imageCounts,
                 'imageCounts1' => ($imageCounts+count($files['name']))            ]
+        );
+    }
+
+    public function uploadImgFileApi(Request $request)
+    {
+        $file=$_FILES['file'];
+        $fileType=pathinfo($file['name'],PATHINFO_EXTENSION);
+        $ext=strtolower($fileType);
+        $allowed_extensions = array("jpg", "bmp", "gif", "tif","png","jpeg");
+        if ($ext && !in_array($ext, $allowed_extensions)) {
+            return Response::json([ 'errors' => '只能上传png、jpg、gif、等等文件.']);
+        }
+        $destinationPath = config('feedback.image_path');
+            //$extension = $file->getClientOriginalExtension();
+        $fileName = str_random(16).'.'.$fileType;
+            //$file->move($destinationPath, $fileName);
+        move_uploaded_file($file["tmp_name"],public_path($destinationPath.$fileName));
+        $img = Image::make(public_path($destinationPath.$fileName))
+                    ->resize(640, null, function ($constraint) {
+                                        $constraint->aspectRatio();
+                                    });
+        $img->save(public_path($destinationPath.$fileName));
+        $imageSrcs=$destinationPath.$fileName;
+   
+        return Response::json(
+            [
+                'status' => true,
+                'imageSrcs' =>$imageSrcs
+            ]
         );
     }
 }

@@ -144,4 +144,25 @@ class FbcontentController extends Controller
             'fbContents'=>$this->fbcontent->getWithUser1($userid,$page)
         ]);
     }
+
+    //get FbcontentsApi
+    public function getFbcontentsApi(Request $request){
+        $tmp=$request->input('params');
+        $user=$this->user->updateOrCreate(
+            ['name'=>$tmp['name']]
+            // ['nickname'=>$tmp['nickname'],'avatar'=>$tmp['avatar']]
+        );
+        $userid=$user->id;
+        $page=$tmp['page'];
+        return response()->json([
+            'status'=>true,
+            'user'=>$user,
+            'fbContents'=>$this->fbcontent->getWithUser1($userid,$page)
+        ]);
+    }
+    //store fbcontent Api
+    public function storeApi(Request $request){//var_dump($request->input('params'));
+        $status=$this->fbcontent->storeContent($request->input('params'));
+        return $status;
+    }
 }
