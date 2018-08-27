@@ -30,7 +30,8 @@ class ImageController extends Controller
 	        if ($ext && !in_array($ext, $allowed_extensions)) {
 	            return Response::json([ 'errors' => '只能上传png、jpg、gif、等等文件.']);
 	        }
-	        $destinationPath = config('feedback.image_path');
+	        //$destinationPath = config('feedback.image_path');
+            $destinationPath = env('UPLOAD_FILE_PATH',config('feedback.image_path'));
 	        //$extension = $file->getClientOriginalExtension();
 	        $fileName = str_random(16).'.'.$fileType;
 	        //$file->move($destinationPath, $fileName);
@@ -40,7 +41,8 @@ class ImageController extends Controller
 	                                        $constraint->aspectRatio();
 	                                    });
 	        $img->save(public_path($destinationPath.$fileName));
-	        array_push($imageSrcs,$destinationPath.$fileName);
+            $upload_prefix = env('UPLOAD_PREFIX', config('app.url'));
+	        array_push($imageSrcs,$upload_prefix.$fileName);
 	    }
         return Response::json(
             [
@@ -60,7 +62,8 @@ class ImageController extends Controller
         if ($ext && !in_array($ext, $allowed_extensions)) {
             return Response::json([ 'errors' => '只能上传png、jpg、gif、等等文件.']);
         }
-        $destinationPath = config('feedback.image_path');
+        //$destinationPath = config('feedback.image_path');
+        $destinationPath = env('UPLOAD_FILE_PATH',config('feedback.image_path'));
             //$extension = $file->getClientOriginalExtension();
         $fileName = str_random(16).'.'.$fileType;
             //$file->move($destinationPath, $fileName);
@@ -70,7 +73,8 @@ class ImageController extends Controller
                                         $constraint->aspectRatio();
                                     });
         $img->save(public_path($destinationPath.$fileName));
-        $imageSrcs=$destinationPath.$fileName;
+        $upload_prefix = env('UPLOAD_PREFIX', config('app.url'));
+        $imageSrcs=$upload_prefix.$fileName;
    
         return Response::json(
             [
