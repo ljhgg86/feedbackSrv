@@ -19,6 +19,7 @@ Vue.component('example', require('./components/Example.vue'));
 Vue.component('feedback', require('./components/Feedback.vue'));
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+<<<<<<< HEAD
 //import VueRouter from 'vue-router'
 import router from './router'
 import store from './store'
@@ -28,4 +29,12 @@ const app = new Vue({
     el: '#ppp',
     router,
     store
+=======
+import router from './router'
+Vue.use(ElementUI)
+
+const app = new Vue({
+    el: '#ppp',
+    router
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
 });

@@ -10,6 +10,7 @@
 
                     @include('partials.errors')
                     @include('partials.success')
+<<<<<<< HEAD
                     @if($user->id)
                         <form action="{{ route('user.update', $user->id) }}" method="POST" accept-charset="UTF-8">
                             <input type="hidden" name="_method" value="PUT">
@@ -82,27 +83,38 @@
                                 @endif
                             </div>
                         </div>
+=======
+                    <form action="{{ route('user.store') }}" method="POST" accept-charset="UTF-8">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
                         <div class="form-group">
                             <div class="col-md-7 col-md-offset-3">
                                 <button type="submit" class="btn btn-primary btn-md">
                                     <span class="glyphicon glyphicon-hand-up">
                                     保存
                                 </button>
+<<<<<<< HEAD
                                 <a type="button" class="btn btn-info btn-md" href="{{ url()->previous() }}">
                                     <span class="glyphicon glyphicon-arrow-left">
                                     返回
                                 </a>
                                 {{-- @if($user->role->id == config('feedback.userRole'))
+=======
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
                                 <a type="button" class="btn btn-info btn-md" href="{{ route('user.index') }}">
                                     <span class="glyphicon glyphicon-arrow-left">
                                     返回
                                 </a>
+<<<<<<< HEAD
                                 @else
                                 <a type="button" class="btn btn-info btn-md" href="{{ route('user.showAdmin') }}">
                                     <span class="glyphicon glyphicon-arrow-left">
                                     返回
                                 </a>
                                 @endif --}}
+=======
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
                             </div>
                         </div>
 
@@ -113,6 +125,7 @@
         </div>
     
 </div>
+<<<<<<< HEAD
 @include('upload._modals')
 @stop
 @section('scripts')
@@ -147,3 +160,6 @@
         });
     </script>
 @stop
+=======
+@stop
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b

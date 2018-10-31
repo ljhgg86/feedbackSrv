@@ -30,7 +30,12 @@ class ImageController extends Controller
 	        if ($ext && !in_array($ext, $allowed_extensions)) {
 	            return Response::json([ 'errors' => '只能上传png、jpg、gif、等等文件.']);
 	        }
+<<<<<<< HEAD
 	        $destinationPath = config('feedback.image_path');
+=======
+	        //$destinationPath = config('feedback.image_path');
+            $destinationPath = env('UPLOAD_FILE_PATH',config('feedback.image_path'));
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
 	        //$extension = $file->getClientOriginalExtension();
 	        $fileName = str_random(16).'.'.$fileType;
 	        //$file->move($destinationPath, $fileName);
@@ -61,7 +66,12 @@ class ImageController extends Controller
         if ($ext && !in_array($ext, $allowed_extensions)) {
             return Response::json([ 'errors' => '只能上传png、jpg、gif、等等文件.']);
         }
+<<<<<<< HEAD
         $destinationPath = config('feedback.image_path');
+=======
+        //$destinationPath = config('feedback.image_path');
+        $destinationPath = env('UPLOAD_FILE_PATH',config('feedback.image_path'));
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
             //$extension = $file->getClientOriginalExtension();
         $fileName = str_random(16).'.'.$fileType;
             //$file->move($destinationPath, $fileName);
@@ -76,7 +86,10 @@ class ImageController extends Controller
    
         return Response::json(
             [
+<<<<<<< HEAD
                 'success' => true,
+=======
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
                 'status' => true,
                 'imageSrcs' =>$imageSrcs
             ]

@@ -18,16 +18,22 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/fbcontent/getFbcontents','FbcontentController@getFbcontents')->name('fbcontent.getFbcontents');
     //Route::resource('fblist','FblistController');
     Route::resource('fbcontent','FbcontentController');
+<<<<<<< HEAD
     Route::get('user/showAdmin','UserController@showAdmin')->name('user.showAdmin');
     Route::get('reset', 'UserController@getReset')->name('user.showReset');
     Route::post('reset', 'UserController@postReset')->name('user.reset');
     Route::get('user/createMB','UserController@createMB')->name('user.createMB');
     Route::post('user/updateMB','UserController@updateMB')->name('user.updateMB');
+=======
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
     Route::resource('user','UserController');
     Route::resource('role','RoleController');
     Route::post('upload/file', 'UploadController@uploadFile')->name('upload.file');
     Route::post('image/upload', 'ImageController@uploadImgFile')->name('image.upload');
+<<<<<<< HEAD
     Route::post('image/uploadApi', 'ImageController@uploadImgFileApi')->name('image.uploadApi');
+=======
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
 });
 Route::get('/auth/password', function (\Illuminate\Http\Request $request){
     // $http = new \GuzzleHttp\Client();

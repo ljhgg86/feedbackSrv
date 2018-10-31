@@ -16,7 +16,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+<<<<<<< HEAD
         'name', 'email', 'password','nickname','avatar','role_id'
+=======
+        'name', 'email', 'password',
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
     ];
 
     /**
@@ -31,6 +35,15 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo('App\Models\Role','role_id');
     }
+<<<<<<< HEAD
+=======
+    // public function fbcontent_send(){
+    //     return $this->hasMany('App\Models\Fbcontent','user_id_src','id');
+    // }
+    // public function fbcontent_recv(){
+    //     return $this->hasMany('App\Models\Fbcontent','user_id_des','id');
+    // }
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
     public function fbcontents(){
         return $this->hasMany('App\Models\Fbcontent','user_id','id');
     }
@@ -40,6 +53,7 @@ class User extends Authenticatable
     public function fblist(){
         return $this->hasMany('App\Models\Fbcontent','user_id','id');
     }
+<<<<<<< HEAD
 
     //is superadmin
     public function isSuperAdmin(){
@@ -63,6 +77,11 @@ class User extends Authenticatable
     public function getAdminWithRole(){
         return $this->where('delflag',0)
                     ->whereIn('role_id',[2,3])
+=======
+    //get users with role
+    public function getWithRole(){
+        return $this->where('delflag',0)
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
                     ->with(['role'=>function($query){
                         $query->where('delflag',0);
                     }])
@@ -72,8 +91,12 @@ class User extends Authenticatable
 
     //get the select user
     public function getUser($id){
+<<<<<<< HEAD
         return $this->where('id',$id)
                     ->with(['role'=>function($query){
+=======
+        return $this->with(['role'=>function($query){
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
                         $query->where('delflag',0);
                     }])
                     ->first();
@@ -87,9 +110,12 @@ class User extends Authenticatable
                     }])
                     ->first();
     }
+<<<<<<< HEAD
 
     //search user by the name
     public function searchByName($name){
         return $this->where('name',$name)->first();
     }
+=======
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
 }

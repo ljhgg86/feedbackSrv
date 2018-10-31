@@ -6,7 +6,11 @@
 
 <script>
     export default {
+<<<<<<< HEAD
       name: 'App',
+=======
+        name: 'Feedback',
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
       created:function(){
         this.funuser();
       },
@@ -45,7 +49,10 @@
               UserAvatar=2;
             }
           }
+<<<<<<< HEAD
           
+=======
+>>>>>>> 5e935d9159f4a261b936017432767933e646234b
         }
       },
         mounted() {
