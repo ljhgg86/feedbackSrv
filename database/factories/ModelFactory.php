@@ -12,7 +12,6 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-<<<<<<< HEAD
 $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
@@ -49,15 +48,5 @@ $factory->define(App\Models\Fblist::class, function (Faker\Generator $faker) {
             return factory(App\Models\User::class)->create()->id;
         },
         'title' => $faker->text($maxNbChars = 20),
-=======
-$factory->define(App\User::class, function (Faker\Generator $faker) {
-    static $password;
-
-    return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
     ];
 });

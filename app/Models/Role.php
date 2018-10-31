@@ -30,14 +30,11 @@ class Role extends Model
     				->get();
     }
 
-<<<<<<< HEAD
     //get all roles
     public function getRoles(){
         return $this->where('delflag',0)->get();
     }
 
-=======
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
     //policies
     //get self fblist policy
     public function getSelfFblistsPolicy(){}

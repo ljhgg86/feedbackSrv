@@ -12,11 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-<<<<<<< HEAD
     'name' => env('APP_NAME', '意见反馈管理'),
-=======
-    'name' => env('APP_NAME', 'Laravel'),
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
 
     /*
     |--------------------------------------------------------------------------
@@ -68,11 +64,7 @@ return [
     |
     */
 
-<<<<<<< HEAD
     'timezone' => 'Asia/Shanghai',
-=======
-    'timezone' => 'UTC',
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
 
     /*
     |--------------------------------------------------------------------------
@@ -184,7 +176,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-<<<<<<< HEAD
 
         /*
         *Passport
@@ -195,9 +186,6 @@ return [
         *Intervention Image
         */
         Intervention\Image\ImageServiceProvider::class,
-=======
-        Intervention\Image\ImageServiceProvider::class
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
 
     ],
 
@@ -247,11 +235,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-<<<<<<< HEAD
         'Image' => Intervention\Image\Facades\Image::class,
-=======
-        'Image' => Intervention\Image\Facades\Image::class
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
 
     ],
 

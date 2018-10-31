@@ -1,10 +1,4 @@
 @extends('layouts.app')
-<<<<<<< HEAD
-=======
-@section('styles')
-    <link rel="stylesheet" href="{{ URL::asset('css/upload.css') }}" >
-@stop
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
 @section('content')
 <div class="container">
         <div class="col-md-10 col-md-offset-1">
@@ -80,12 +74,7 @@
                         <input type="hidden" name="admin_id" value={{ Auth::id() }}>
                         <input type="hidden" name="preUrl" value={{ $preUrl }}>
                         <div class="form-group">
-<<<<<<< HEAD
                             <textarea class="form-control" rows="3" name="content"></textarea>
-=======
-                            <textarea class="form-control" rows="3" name="content">
-                            </textarea>
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
                         </div>
                         <input type="hidden" name="imageSrcs" value="">
                         {{-- <div class="col-md-12"> --}}
@@ -126,15 +115,9 @@
     <script type="text/javascript"
      src="{{ URL::asset('js/jquery.form.js')  }}">
     </script>
-<<<<<<< HEAD
     {{-- <script type="text/javascript"
      src="{{ URL::asset('js/jquery-3.3.1.min.js')  }}">
     </script> --}}
-=======
-    <script type="text/javascript"
-     src="{{ URL::asset('js/jquery-3.3.1.min.js')  }}">
-    </script>
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
     <script type="text/javascript">
         var page=0;
         $(function () {
@@ -165,19 +148,11 @@
                     imageSrcs=imageSrcs.concat(imageSrcsAdd);
                     imageCounts+=imageSrcsAdd.length;
                     for(let index in imageSrcsAdd){
-<<<<<<< HEAD
                         var temp=imageSrcsAdd[index];
                         $("#imgLine").append(
                             "<div class='col-sm-3 col-md-2'>\
                                     <a href='#' class='thumbnail' onclick='preview_image(&quot;"+temp+"&quot;)'>\
                                         <img src='"+imageSrcsAdd[index]+"'>\
-=======
-                        var temp="../../"+imageSrcsAdd[index];
-                        $("#imgLine").append(
-                            "<div class='col-sm-3 col-md-2'>\
-                                    <a href='#' class='thumbnail' onclick='preview_image(&quot;"+temp+"&quot;)'>\
-                                        <img src='../../"+imageSrcsAdd[index]+"' alt='通用的占位符缩略图''>\
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
                                     </a>\
                                 </div>"
                             );
@@ -249,7 +224,6 @@
                         if(fbcontents[index].imgflag){
                         htmlRow+=
                         "<div class='col-sm-9 col-md-6'>\
-<<<<<<< HEAD
                             <a href='#' class='thumbnail' onclick='preview_image(&quot;"+fbcontents[index].content+"&quot;)'>\
                                 <img src='"+fbcontents[index].content+"'>\
                             </a>\
@@ -273,23 +247,6 @@
                         }
                         htmlRow+=
                     "</div>\
-=======
-                            <a href='#' class='thumbnail' onclick='preview_image(&quot;../../"+fbcontents[index].content+"&quot;)'>\
-                                <img src='../../"+fbcontents[index].content+"' alt='通用的占位符缩略图'>\
-                            </a>\
-                        </div>";
-                        }
-                        else{
-                            htmlRow+=fbcontents[index].content;
-                        }
-                        htmlRow+=
-                        "<div>\
-                            <span class='label label-info'>"+
-                                fbcontents[index].created_at
-                            +"</span>\
-                        </div>\
-                    </div>\
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
                 </div>";
             }
             else {
@@ -304,7 +261,6 @@
                                 if(fbcontents[index].imgflag){
                                     htmlRow+=
                                 "<div class='col-sm-9 col-md-6 pull-right'>\
-<<<<<<< HEAD
                                     <a href='#' class='thumbnail' onclick='preview_image(&quot;"+fbcontents[index].content+"&quot;)'>\
                                         <img src='"+fbcontents[index].content+"'>\
                                     </a>\
@@ -328,23 +284,6 @@
                                 }
                                 htmlRow+=
                             "</div>\
-=======
-                                    <a href='#' class='thumbnail' onclick='preview_image(&quot;../../"+fbcontents[index].content+"')'>\
-                                        <img src='../../"+fbcontents[index].content+"' alt='通用的占位符缩略图'>\
-                                    </a>\
-                                </div>";
-                                }
-                                else{
-                                    htmlRow+=fbcontents[index].content;
-                                }
-                                htmlRow+=
-                                "<div>\
-                                    <span class='label label-success'>"+
-                                    fbcontents[index].created_at+
-                                "</span>\
-                                </div>\
-                            </div>\
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
                         </div>";
             }
             html=htmlRow+html;

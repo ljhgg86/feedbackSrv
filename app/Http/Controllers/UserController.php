@@ -3,29 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Validator;
-=======
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Fbcontent;
 use Response;
 use DB;
-<<<<<<< HEAD
 use Auth;
-=======
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
 
 class UserController extends Controller
 {
     public function __construct()
     {
         $this->user=new User();
-<<<<<<< HEAD
         $this->role=new Role();
-=======
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
     }
     /**
      * Display a listing of the resource.
@@ -34,11 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
         return view('user.index',['users'=>$this->user->getWithRole(),'kind'=>'用户']);
-=======
-        return view('user.index',['users'=>$this->user->getWithRole()]);
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
     }
 
     /**
@@ -48,7 +35,6 @@ class UserController extends Controller
      */
     public function create()
     {
-<<<<<<< HEAD
         $user=new User();
         $user->role=new Role();
         return view('user.edit',['user'=>$user,'roles'=>$this->role->getRoles()]);
@@ -58,9 +44,6 @@ class UserController extends Controller
     public function createMB()
     {
         return view('user.createMB',['tip'=>'必须是已存在的用户，修改后普通用户成为手机管理员，手机管理员则成为普通用户！']);
-=======
-        //
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
     }
 
     /**
@@ -71,29 +54,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD
         $password=$request->input('password');
         $role_id=$request->input('role');
         $password=$password ? bcrypt($password) : bcrypt('123456');
         $role_id=$role_id ? intval($role_id) : config('feedback.userRole');
-=======
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
         $user=User::create([
             'uid'=>$request->input('uid'), 
             'name'=>$request->input('mobile'),
             'nickname'=>$request->input('nickname'),
             'avatar'=>$request->input('avatar'),
-<<<<<<< HEAD
             'password'=>$password,
             'role_id'=>$role_id
         ]);
         if($role_id != config('feedback.userRole')){
             return redirect()->route('user.showAdmin');
         }
-=======
-            'password'=>bcrypt('123456')
-        ]);
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
     }
 
     /**
@@ -122,11 +97,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-<<<<<<< HEAD
         return view('user.edit',['user'=>$this->user->getUser($id),'roles'=>$this->role->getRoles()]);
-=======
-        return view('user.edit',['user'=>$this->user->getUser($id)]);
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
     }
 
     /**
@@ -138,7 +109,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-<<<<<<< HEAD
         $user = User::find($id);
         $user->nickname = $request->input('nickname');
         $user->avatar = $request->input('avatar');
@@ -162,9 +132,6 @@ class UserController extends Controller
         $user->role_id = $roleid;
         $user->save();
         return redirect()->route('user.showAdmin');
-=======
-        //
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
     }
 
     /**
@@ -177,7 +144,6 @@ class UserController extends Controller
     {
         //
     }
-<<<<<<< HEAD
 
     /**
     *Display the list of users which is admin
@@ -227,6 +193,4 @@ class UserController extends Controller
         Auth::logout();  //更改完这次密码后，退出这个用户
         return redirect('/login');
     }
-=======
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
 }

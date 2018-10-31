@@ -36,21 +36,15 @@
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
-<<<<<<< HEAD
                     @if (!Auth::guest())
                     <ul class="nav navbar-nav">
                         <li><a href="{{url('/home')}}">反馈列表</a></li>
                         @if(Auth::user()->role_id == config('feedback.superRole'))
-=======
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{url('/home')}}">反馈列表</a></li>
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">系统管理
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-<<<<<<< HEAD
                                 <li><a href="{{url('/user/showAdmin')}}">管理员</a></li>
                                 <li><a href="{{url('/user')}}">用户管理</a></li>
                                 <li><a href="{{url('/role')}}">角色管理</a></li>
@@ -59,13 +53,6 @@
                         @endif
                     </ul>
                     @endif
-=======
-                            <li><a href="{{url('/user')}}">用户管理</a></li>
-                            <li><a href="{{url('/role')}}">角色管理</a></li>
-                            </ul>
-                        </li>
-                    </ul>
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
@@ -75,16 +62,11 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-<<<<<<< HEAD
                                     {{ Auth::user()->nickname }} <span class="caret"></span>
-=======
-                                    {{ Auth::user()->name }} <span class="caret"></span>
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-<<<<<<< HEAD
                                         <a href="{{ route('user.edit',Auth::id()) }}">
                                             个人设置
                                         </a>
@@ -99,12 +81,6 @@
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             注销
-=======
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -123,12 +99,9 @@
     </div>
 
     <!-- Scripts -->
-<<<<<<< HEAD
     <script type="text/javascript"
      src="{{ URL::asset('js/jquery-3.3.1.min.js')  }}">
     </script>
-=======
->>>>>>> 5e935d9159f4a261b936017432767933e646234b
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('scripts')
 </body>
