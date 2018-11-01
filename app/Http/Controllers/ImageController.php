@@ -34,7 +34,8 @@ class ImageController extends Controller
 	        //$extension = $file->getClientOriginalExtension();
 	        $fileName = str_random(16).'.'.$fileType;
 	        //$file->move($destinationPath, $fileName);
-	        move_uploaded_file($files["tmp_name"][$key],public_path($destinationPath.$fileName));
+            move_uploaded_file($files["tmp_name"][$key],($destinationPath.$fileName));
+	        //move_uploaded_file($files["tmp_name"][$key],public_path($destinationPath.$fileName));
 	        $img = Image::make(public_path($destinationPath.$fileName))
 	                    ->resize(640, null, function ($constraint) {
 	                                        $constraint->aspectRatio();
@@ -62,10 +63,9 @@ class ImageController extends Controller
             return Response::json([ 'errors' => '只能上传png、jpg、gif、等等文件.']);
         }
         $destinationPath = env('UPLOAD_FILE_PATH',config('feedback.image_path'));
-            //$extension = $file->getClientOriginalExtension();
         $fileName = str_random(16).'.'.$fileType;
-            //$file->move($destinationPath, $fileName);
-        move_uploaded_file($file["tmp_name"],public_path($destinationPath.$fileName));
+        //move_uploaded_file($file["tmp_name"],public_path($destinationPath.$fileName));
+        move_uploaded_file($file["tmp_name"],($destinationPath.$fileName));
         $img = Image::make(public_path($destinationPath.$fileName))
                     ->resize(640, null, function ($constraint) {
                                         $constraint->aspectRatio();
