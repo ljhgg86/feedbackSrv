@@ -39,7 +39,7 @@
                             </label>
                              <input type="text" class="form-control" id="role" name="role" value="{{ $user->role->name }}" readonly>
                              @else
-                             <input type="hidden" class="form-control" id="role" name="role" value={{config('feedback.superRole')}}>
+                             <input type="hidden" class="form-control" id="role" name="role" value={{config('feedback.pcRole')}}>
                             {{-- <select class="form-control" name="role">
                                 @foreach($roles as $role)
                                 @if($user->role->id == $role->id)
