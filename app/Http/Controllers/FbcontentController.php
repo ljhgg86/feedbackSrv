@@ -65,24 +65,12 @@ class FbcontentController extends Controller
      */
     public function store(Request $request)
     {
-        //var_dump($request->all());
-        // $fbcontent=$request->input('content');
-        // $imageSrcsStr=$request->input('imageSrcs');
-        // if(!$fbcontent && !$imageSrcsStr){
-        //     return;
-        // }
-        // if($fbcontent){
-        //     $fbcontent=$this->fbcontent->create($request->all());
-        // }
-        // if($imageSrcsStr=$request->input('imageSrcs')){
-        //     $imageSrcsArray=explode(",",$imageSrcsStr);
-        // }
         $status=$this->fbcontent->storeContent($request->all());
-        //return view('home.show',['fblist'=>$this->user->getWithFbinfo($request->input('user_id')),'preUrl'=>$request->input('preUrl')]);
         $id=$request->input('user_id');
         $preUrl=$request->input('preUrl');
         //return view('home.show2',['fbcontents'=>$this->fbcontent->getWithUser($id),'user'=>$this->user->find($id),'preUrl'=>$request->input('preUrl')]);
-        return redirect()->route('home.show',['user'=>$this->user->find($id),'preUrl'=>$preUrl]);
+        //return redirect()->route('home.show',['user'=>$this->user->find($id),'preUrl'=>$preUrl]);
+        return view('home.show',['user'=>$this->user->find($id),'preUrl'=>$preUrl]);
     }
 
     /**
@@ -135,6 +123,11 @@ class FbcontentController extends Controller
         //
     }
 
+    //update value of content's delflag with 1
+    public function delContent($id){
+        return $this->fbcontent->delContent($id);
+    }
+
     //get Fbcontents
     public function getFbcontents(Request $request){
         $userid=$request->input('userid');
@@ -149,15 +142,26 @@ class FbcontentController extends Controller
     public function getFbcontentsApi(Request $request){
         $tmp=$request->input('params');
         $user=$this->user->updateOrCreate(
-            ['name'=>$tmp['name']]
-            // ['nickname'=>$tmp['nickname'],'avatar'=>$tmp['avatar']]
+            ['name'=>$tmp['name']],
+             ['nickname'=>$tmp['nickname'],'avatar'=>$tmp['avatar']]
         );
         $userid=$user->id;
         $page=$tmp['page'];
+        if($page==0){
+            $this->fbcontent->updateReadflagApi($userid);
+        }
         return response()->json([
             'status'=>true,
             'user'=>$user,
             'fbContents'=>$this->fbcontent->getWithUser1($userid,$page)
+        ]);
+    }
+    //get FbcontentsApiAdmin
+    public function getFbcontentsApiAdmin($id,$page){
+        $this->fbcontent->updateReadflag($id);
+        return response()->json([
+            'status'=>true,
+            'fbContents'=>$this->fbcontent->getWithUser1($id,$page)
         ]);
     }
     //store fbcontent Api

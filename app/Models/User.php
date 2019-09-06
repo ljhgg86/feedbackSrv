@@ -5,6 +5,7 @@ namespace App\Models;
 //use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use DB;
 
 class User extends Authenticatable
 {
@@ -91,5 +92,54 @@ class User extends Authenticatable
     //search user by the name
     public function searchByName($name){
         return $this->where('name',$name)->first();
+    }
+
+    //get user list with feedback by datetime desc
+    public function getUsersWithFbs($page){
+        $showByAdmin = config('feedback.showByAdmin');
+        $fblists=DB::table('users')
+                ->join('fbcontent','users.id','=','fbcontent.user_id')
+                ->where('fbcontent.admin_id',0)
+                ->where('fbcontent.delflag',0)
+                ->select(DB::raw('MAX(fbcontent.id) as id,count(if(readflag=0 and admin_id=0,true,null)) as count, user_id,name,nickname,fbcontent.content,fbcontent.imgflag,fbcontent.videoflag,fbcontent.created_at'))
+                ->groupBy('user_id')
+                ->orderBy('id','desc')
+                ->skip($page*$showByAdmin)
+                ->take($showByAdmin)
+                ->get();
+        return $fblists;
+    }
+
+    //get user list with feedback by datetime desc where has the keyword
+    public function searchWithFbs($keyword,$page){
+        $showByAdmin = config('feedback.showByAdmin');
+        $fblists=DB::table('users')
+                ->join('fbcontent','users.id','=','fbcontent.user_id')
+                ->where(function($query) use($keyword){
+                    $query->where('users.name','like','%'.$keyword.'%')
+                        ->orWhere('users.nickname','like','%'.$keyword.'%')
+                        ->orWhere(function($childQuery) use($keyword){
+                            $childQuery->where('fbcontent.imgflag',0)
+                                ->where('fbcontent.content','like','%'.$keyword.'%');
+                        });
+                })
+                ->select(DB::raw('MAX(fbcontent.id) as id,count(if(readflag=0 and admin_id=0,true,null)) as count, user_id,name,nickname,fbcontent.content,fbcontent.imgflag,fbcontent.videoflag,fbcontent.created_at'))
+                ->groupBy('user_id')
+                ->orderBy('id','desc')
+                ->skip($page*$showByAdmin)
+                ->take($showByAdmin)
+                ->get();
+        return $fblists;
+    }
+
+    //get counts of reply by admin
+    public function getReplyCounts($name){
+        return $this->where('name',$name)
+                    ->withCount(['fbcontents' => function($query){
+                        $query->where('admin_id','<>',0)
+                            ->where('readflag',0)
+                            ->where('delflag',0);
+                    }])
+                    ->get();
     }
 }

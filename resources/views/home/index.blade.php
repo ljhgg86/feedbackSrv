@@ -26,9 +26,9 @@
                                 <td>{{ $fblist->name }}</td>
                                 <td>
                                     @if($fblist->imgflag)
-                                    {{ 图片信息 }}
+                                    图片信息
                                     @elseif($fblist->videoflag)
-                                    {{ 视频信息 }}
+                                    视频信息
                                     @else
                                     {{ $fblist->content }}
                                     @endif

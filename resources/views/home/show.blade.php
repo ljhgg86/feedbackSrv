@@ -10,62 +10,6 @@
                     </h4>
                 </div>
                 <div class="panel-body pre-scrollable" id="fbPanel">
-
-                    {{-- @include('partials.errors')
-                    @include('partials.success') --}}
-                    {{-- <div class="row pre-scrollable">  --}}
-                    {{-- @foreach($fblist->fbcontents as $fbcontent)
-                        @if($fbcontent->admin_id==0)
-                        <div class="row" style="text-align: left;">
-                            <div class="col-md-1">
-                                <a href="#" class="thumbnail">
-                                    <img src="{{ $fblist->avatar }}">
-                                </a>
-                            </div>
-                            <div class="col-md-7">
-                                @if($fbcontent->imgflag)
-                                <div class='col-sm-9 col-md-6'>
-                                    <a href="#" class="thumbnail" onclick="preview_image('../../{{ $fbcontent->content }}')">
-                                        <img src="../../{{ $fbcontent->content }}" alt="通用的占位符缩略图">
-                                    </a>
-                                </div>
-                                @else
-                                {{ $fbcontent->content }}
-                                @endif
-                                <div>
-                                    <span class="label label-info">
-                                        {{ $fbcontent->created_at }}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        @else 
-                        <div class="row">
-                            <div class="col-md-1 pull-right">
-                                <a href="#" class="thumbnail">
-                                    <img src="{{ $fbcontent->admin->avatar }}">
-                                </a>
-                            </div>
-                            <div class="col-md-7 pull-right text-right">
-                                @if($fbcontent->imgflag)
-                                <div class='col-sm-9 col-md-6 pull-right'>
-                                    <a href="#" class="thumbnail" onclick="preview_image('../../{{ $fbcontent->content }}')">
-                                        <img src="../../{{ $fbcontent->content }}" alt="通用的占位符缩略图">
-                                    </a>
-                                </div>
-                                @else
-                                {{ $fbcontent->content }}
-                                @endif
-                                <div>
-                                    <span class="label label-success">
-                                    {{ $fbcontent->created_at }}
-                                </span>
-                                </div>
-                            </div>
-                        </div>
-                        @endif
-                    @endforeach --}}
-                    {{-- </div> --}}
                 </div>
                 <div class="panel-body">
                     <form action="{{ route('fbcontent.store') }}" method="POST" accept-charset="UTF-8">
@@ -77,12 +21,6 @@
                             <textarea class="form-control" rows="3" name="content"></textarea>
                         </div>
                         <input type="hidden" name="imageSrcs" value="">
-                        {{-- <div class="col-md-12"> --}}
-                                {{-- <button type="button" class="btn btn-info btn-xs plain pull-left" id="img-upload">
-                                    <span class="glyphicon glyphicon-cloud-upload">
-                                    </span>
-                                    图片/视频
-                                </button> --}}
                         <div class="form-group" id="imgLine">
                             <button type="button" class="btn btn-warning btn-xs plain pull-left" data-toggle="modal" data-target="#myModal">
                                 <span class="glyphicon glyphicon-cloud-upload">
@@ -90,7 +28,6 @@
                                 图片
                             </button>
                         </div>
-                        {{-- </div> --}}
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-3">
                                 <button type="submit" class="btn btn-primary btn-md pull-center">
@@ -105,7 +42,6 @@
                         </div>
                     </form>
                 </div>
-                {{-- </div> --}}
             </div>
         </div>
 </div>
@@ -274,7 +210,7 @@
                                 }
                                 else{
                                 htmlRow+=
-                                "<div class='col-md-12 text-left' style='background:#eeeed1'>"+fbcontents[index].content+"</div>";
+                                "<div class='col-md-12'>"+"<div class='text-left' style='background:#eeeed1;display:inline-block'>"+fbcontents[index].content+"</div>"+"</div>";
                                 htmlRow+=
                                 "<div class='col-md-12 text-left'>\
                                     <span class='label label-info'>"+

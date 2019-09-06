@@ -41,6 +41,7 @@ class HomeController extends Controller
         $fblists=DB::table('users')
                 ->join('fbcontent','users.id','=','fbcontent.user_id')
                 ->where('fbcontent.admin_id',0)
+                ->where('fbcontent.delflag',0)
                 ->select(DB::raw('MAX(fbcontent.id) as id,count(if(readflag=0 and admin_id=0,true,null)) as count, user_id,name,fbcontent.content,fbcontent.imgflag,fbcontent.videoflag,fbcontent.created_at'))
                 ->groupBy('user_id')
                 ->orderBy('id','desc')
@@ -57,4 +58,5 @@ class HomeController extends Controller
     // public function show($id){
     //     return view('home.show2',['fbcontents'=>$this->fbcontent->getWithUser($id),'user'=>$this->user->find($id),'preUrl'=>url()->previous()]);
     // }
+
 }

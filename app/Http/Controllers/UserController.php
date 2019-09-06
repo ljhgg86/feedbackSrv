@@ -193,4 +193,46 @@ class UserController extends Controller
         Auth::logout();  //更改完这次密码后，退出这个用户
         return redirect('/login');
     }
+
+    /*
+    **search user by name
+    */
+    public function searchUserName($name){
+        return $this->user->searchByName($name);
+    }
+
+
+    //show user's feedbacks to mobile admin
+    public function showFbs($page){
+        return response()->json([
+            'status'=>true,
+            'fblists'=>$this->user->getUsersWithFbs($page)
+        ]);
+    }
+
+    //show user's feedbacks to mobile admin where has keyword
+    public function searchFbs($keyword,$page){
+        return response()->json([
+            'status'=>true,
+            'fblists'=>$this->user->searchWithFbs($keyword,$page)
+        ]);
+    }
+
+    //get counts of reply by admin
+    public function getReplyCounts($name){
+        $user=$this->user->getReplyCounts($name);
+        if(count($user)){
+            return response()->json([
+                'status'=>true,
+                'mobile'=>$user[0]->name,
+                'feedbackCounts'=>$user[0]->fbcontents_count
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'=>false
+            ]);
+        }
+        
+    }
 }

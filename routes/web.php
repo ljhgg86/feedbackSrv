@@ -25,6 +25,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('user/updateMB','UserController@updateMB')->name('user.updateMB');
     Route::resource('user','UserController');
     Route::resource('role','RoleController');
+    Route::resource('type','TypeController');
+    Route::resource('notice','NoticeController');
     Route::post('upload/file', 'UploadController@uploadFile')->name('upload.file');
     Route::post('image/upload', 'ImageController@uploadImgFile')->name('image.upload');
     Route::post('image/uploadApi', 'ImageController@uploadImgFileApi')->name('image.uploadApi');

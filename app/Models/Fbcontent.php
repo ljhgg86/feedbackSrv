@@ -35,6 +35,20 @@ class Fbcontent extends Model
             ->where('delflag',0)
             ->update(['readflag'=>1]);
     }
+    //update read flag by user
+    public function updateReadflagApi($id){
+        $this->where('user_id',$id)
+            ->where('admin_id','<>',0)
+            ->where('readflag',0)
+            ->where('delflag',0)
+            ->update(['readflag'=>1]);
+    }
+
+    //set value of content's delflag with 1
+    public function delContent($id){
+        return $this->where('id',$id)
+                    ->update(['delflag'=>1]);
+    }
 
     //store content
     public function storeContent($info){
@@ -42,15 +56,17 @@ class Fbcontent extends Model
         $admin_id=$info['admin_id'];
         $content=$info['content'];
         $imageSrcsStr=$info['imageSrcs'];
+        $fbid=0;
         if(!$content && !$imageSrcsStr){
-            return json_encode(['status'=>false]);
+            return json_encode(['status'=>false , 'id'=>$fbid]);
         };
         if($content){
-            $this->create(
+            $fb=$this->create(
                 ['user_id'=>$user_id,
                 'admin_id'=>$admin_id,
                 'content'=>$content]
             );
+            $fbid = $fb['id'];
         }
         if($imageSrcsStr){
             $imageSrcsArray=explode(",",$imageSrcsStr);
@@ -62,22 +78,24 @@ class Fbcontent extends Model
                 //     'content'=>$imageSrc,
                 //     'imgflag'=>1]
                 // );
-                $this->create(
-                    ['user_id'=>$user_id,
-                    'admin_id'=>$admin_id,
-                    'content'=>$imageSrc,
-                    'imgflag'=>1]
-                );
+                $fb=$this->create(
+                        ['user_id'=>$user_id,
+                        'admin_id'=>$admin_id,
+                        'content'=>$imageSrc,
+                        'imgflag'=>1]
+                    );
             }
+            $fbid = $fb['id'];
             // var_dump($imageContents);
             // $this->create($imageContents);
         }
-        return json_encode(['status'=>true]);
+        return json_encode(['status'=>true , 'id'=>$fbid]);
     }
 
     //get the dialog's feedback infomation list
     public function getWithUser($id){
         return $this->where('user_id',$id)
+                    ->where('delflag',0)
                     ->with(['user'=>function($query){
                         $query->where('delflag',0);
                     },'admin'=>function($query){
@@ -90,6 +108,7 @@ class Fbcontent extends Model
     public function getWithUser1($userid,$page){
         $perPage=config('feedback.perPage');
         return $this->where('user_id',$userid)
+                    ->where('delflag',0)
                     ->with(['user'=>function($query){
                         $query->where('delflag',0);
                     },'admin'=>function($query){

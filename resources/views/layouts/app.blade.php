@@ -39,6 +39,7 @@
                     @if (!Auth::guest())
                     <ul class="nav navbar-nav">
                         <li><a href="{{url('/home')}}">反馈列表</a></li>
+                        <li><a href="{{url('/notice')}}">公告列表</a></li>
                         @if(Auth::user()->role_id == config('feedback.superRole'))
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">系统管理
@@ -48,6 +49,7 @@
                                 <li><a href="{{url('/user/showAdmin')}}">管理员</a></li>
                                 <li><a href="{{url('/user')}}">用户管理</a></li>
                                 <li><a href="{{url('/role')}}">角色管理</a></li>
+                                <li><a href="{{url('/type')}}">类型管理</a></li>
                             </ul>
                         </li>
                         @endif
