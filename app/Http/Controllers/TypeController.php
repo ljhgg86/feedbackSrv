@@ -25,7 +25,8 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+        $type=new Type();
+        return view('type.edit')->with('type',$type);
     }
 
     /**
@@ -36,7 +37,14 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|string|max:255|unique:type'
+        ]);
+        $type=Type::create([
+            'name'=>$request->input('name')
+        ]);
+        return redirect('/type')
+                        ->withSuccess("栏目类型 '$type->name' 新建成功.");
     }
 
     /**
@@ -58,7 +66,9 @@ class TypeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $type=Type::where('id',$id)
+                ->first();
+        return view('type.edit')->with('type',$type);
     }
 
     /**
@@ -70,7 +80,14 @@ class TypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|string|max:255'
+        ]);
+        $type = Type::findOrFail($id);
+        $type->name=$request->input('name');
+        $type->save();
+        return redirect("/type/$id/edit")
+                        ->withSuccess("栏目类型 '$type->name' 更新成功.");
     }
 
     /**

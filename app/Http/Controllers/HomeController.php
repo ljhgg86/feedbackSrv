@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Fbcontent;
 use App\Models\Fblist;
+use App\Models\Type;
 use Response;
 use DB;
 
@@ -29,7 +30,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($typeid=0)
     {
         // $fblists=DB::table('users')
         //         ->join('fbcontent','users.id','=','fbcontent.user_id')
@@ -42,12 +43,20 @@ class HomeController extends Controller
                 ->join('fbcontent','users.id','=','fbcontent.user_id')
                 ->where('fbcontent.admin_id',0)
                 ->where('fbcontent.delflag',0)
+                ->where IF($typeid>0,'fbcontent.type_id',$typeid)
                 ->select(DB::raw('MAX(fbcontent.id) as id,count(if(readflag=0 and admin_id=0,true,null)) as count, user_id,name,fbcontent.content,fbcontent.imgflag,fbcontent.videoflag,fbcontent.created_at'))
                 ->groupBy('user_id')
                 ->orderBy('id','desc')
                 ->paginate(15);
-
-        return view('home.index',['fblists'=>$fblists]);
+        $types=Type::where('delflag',0)->get();
+        $currentType=Type::where('id',$typeid)->first();
+        if($currentType){
+            $currentTypeName = $currentType->name;
+        }
+        else{
+            $currentTypeName = "全部";
+        }
+        return view('home.index',['fblists'=>$fblists,'types'=>$types,'currentTypeName'=>$currentTypeName]);
     }
 
     //show the select dialog

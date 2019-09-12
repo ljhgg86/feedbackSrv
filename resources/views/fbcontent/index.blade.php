@@ -12,6 +12,11 @@
             <div class="panel-body">
                 <table class="table table-hover">
                     <caption>{{ config('feedback.feedbacklist') }}</caption>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input class="form-control" type="text" placeholder="默认输入">
+                        </div>
+                    </div>
                     <thead>
                         <tr>
                             <th style="width:5%;">序号</th>

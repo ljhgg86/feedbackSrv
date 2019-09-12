@@ -12,4 +12,10 @@ class Type extends Model
         'name',
         'delflag'
     ];
+    public function fbcontents(){
+        return $this->hasMany('App\Models\Fbcontent','type_id','id');
+    }
+    public function users(){
+        return $this->belongsToMany('App\Models\users', 'type_users', 'type_id', 'user_id');
+    }
 }

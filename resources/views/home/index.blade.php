@@ -12,6 +12,32 @@
             <div class="panel-body">
                 <table class="table table-hover">
                     <caption>{{ config('feedback.feedbacklist') }}</caption>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{$currentTypeName}}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    @foreach($types as $type)
+                                    <li>
+                                        <a href="{{ route('home' , ['typeid'=>$type->id]) }}">{{$type->name}}</a>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <form role="form">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="搜索内容">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">搜索</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                     <thead>
                         <tr>
                             <th>用户</th>

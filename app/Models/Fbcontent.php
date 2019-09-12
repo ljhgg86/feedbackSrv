@@ -12,6 +12,7 @@ class Fbcontent extends Model
         'user_id',
         'admin_id',
         'fblist_id',
+        'type_id',
         'imgflag',
         'videoflag',
         'readflag',
@@ -26,6 +27,9 @@ class Fbcontent extends Model
     }
     public function fblist(){
         return $this->belongsTo('App\Models\Fblist','fblist_id');
+    }
+    public function type(){
+        return $this->belongsTo('App\Models\Type','type_id');
     }
     //update read flag
     public function updateReadflag($id){

@@ -41,6 +41,9 @@ class User extends Authenticatable
     public function fblist(){
         return $this->hasMany('App\Models\Fbcontent','user_id','id');
     }
+    public function types(){
+        return $this->belongsToMany('App\Models\types', 'type_users', 'user_id', 'type_id');
+    }
 
     //is superadmin
     public function isSuperAdmin(){

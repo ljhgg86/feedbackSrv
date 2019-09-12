@@ -33,5 +33,5 @@ Route::group(['middleware' => ['auth']], function () {
 });
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/{typeid?}', 'HomeController@index')->name('home');
 Route::get('/home/show/{id}', 'HomeController@show')->name('home.show');
