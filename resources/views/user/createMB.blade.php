@@ -10,7 +10,7 @@
 
                 @include('partials.errors')
                 @include('partials.success')
-                <form action="{{ route('user.updateMB') }}" method="POST" accept-charset="UTF-8">
+                <form action="{{ route('user.searchMB') }}" method="POST" accept-charset="UTF-8">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert"
@@ -30,7 +30,7 @@
                         <div class="col-md-7 col-md-offset-3">
                             <button type="submit" class="btn btn-primary btn-md">
                                 <span class="glyphicon glyphicon-hand-up">
-                                修改
+                                查找
                             </button>
                             <a type="button" class="btn btn-info btn-md" href="{{ route('user.showAdmin') }}">
                                 <span class="glyphicon glyphicon-arrow-left">

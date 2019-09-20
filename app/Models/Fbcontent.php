@@ -32,16 +32,18 @@ class Fbcontent extends Model
         return $this->belongsTo('App\Models\Type','type_id');
     }
     //update read flag
-    public function updateReadflag($id){
+    public function updateReadflag($id,$typeid){
         $this->where('user_id',$id)
+            ->where('type_id',$typeid)
             ->where('admin_id',0)
             ->where('readflag',0)
             ->where('delflag',0)
             ->update(['readflag'=>1]);
     }
     //update read flag by user
-    public function updateReadflagApi($id){
+    public function updateReadflagApi($id,$typeid){
         $this->where('user_id',$id)
+            ->where('type_id',$typeid)
             ->where('admin_id','<>',0)
             ->where('readflag',0)
             ->where('delflag',0)
@@ -58,6 +60,7 @@ class Fbcontent extends Model
     public function storeContent($info){
         $user_id=$info['user_id'];
         $admin_id=$info['admin_id'];
+        $type_id=$info['type_id'];
         $content=$info['content'];
         $imageSrcsStr=$info['imageSrcs'];
         $fbid=0;
@@ -68,6 +71,7 @@ class Fbcontent extends Model
             $fb=$this->create(
                 ['user_id'=>$user_id,
                 'admin_id'=>$admin_id,
+                'type_id'=>$type_id,
                 'content'=>$content]
             );
             $fbid = $fb['id'];
@@ -85,6 +89,7 @@ class Fbcontent extends Model
                 $fb=$this->create(
                         ['user_id'=>$user_id,
                         'admin_id'=>$admin_id,
+                        'type_id'=>$type_id,
                         'content'=>$imageSrc,
                         'imgflag'=>1]
                     );
@@ -109,10 +114,11 @@ class Fbcontent extends Model
                     ->paginate(4);
     }
 
-    public function getWithUser1($userid,$page){
+    public function getWithUser1($userid,$page,$typeid){
         $perPage=config('feedback.perPage');
         return $this->where('user_id',$userid)
                     ->where('delflag',0)
+                    ->where('type_id',$typeid)
                     ->with(['user'=>function($query){
                         $query->where('delflag',0);
                     },'admin'=>function($query){
@@ -124,8 +130,8 @@ class Fbcontent extends Model
                     ->get();
     }
 
-    public function getPanelHtml($userid,$page){
-        $fbcontents=$this->getWithUser1($userid,$page);
+    public function getPanelHtml($userid,$page,$typeid){
+        $fbcontents=$this->getWithUser1($userid,$page,$typeid);
         $html="";
         $htmlRow="";
         if(!count($fbcontents)){

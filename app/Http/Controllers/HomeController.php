@@ -30,7 +30,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($typeid=0)
+    public function index($typeid=1)
     {
         // $fblists=DB::table('users')
         //         ->join('fbcontent','users.id','=','fbcontent.user_id')
@@ -43,8 +43,12 @@ class HomeController extends Controller
                 ->join('fbcontent','users.id','=','fbcontent.user_id')
                 ->where('fbcontent.admin_id',0)
                 ->where('fbcontent.delflag',0)
-                ->where IF($typeid>0,'fbcontent.type_id',$typeid)
-                ->select(DB::raw('MAX(fbcontent.id) as id,count(if(readflag=0 and admin_id=0,true,null)) as count, user_id,name,fbcontent.content,fbcontent.imgflag,fbcontent.videoflag,fbcontent.created_at'))
+                ->where(function($query) use($typeid){
+                    if($typeid>0){
+                        $query->where('fbcontent.type_id',$typeid);
+                    }
+                })
+                ->select(DB::raw('MAX(fbcontent.id) as id,count(if(readflag=0 and admin_id=0,true,null)) as count, user_id,name,fbcontent.type_id,fbcontent.content,fbcontent.imgflag,fbcontent.videoflag,fbcontent.created_at'))
                 ->groupBy('user_id')
                 ->orderBy('id','desc')
                 ->paginate(15);
@@ -60,12 +64,12 @@ class HomeController extends Controller
     }
 
     //show the select dialog
-    public function show($id){
-        $this->fbcontent->updateReadflag($id);
-        return view('home.show',['user'=>$this->user->find($id),'preUrl'=>url()->previous()]);
+    public function show($userid,$typeid){
+        $this->fbcontent->updateReadflag($userid,$typeid);
+        return view('home.show',['user'=>$this->user->find($userid),'typeid'=>$typeid,'preUrl'=>url()->previous()]);
     }
-    // public function show($id){
-    //     return view('home.show2',['fbcontents'=>$this->fbcontent->getWithUser($id),'user'=>$this->user->find($id),'preUrl'=>url()->previous()]);
+    // public function show($userid){
+    //     return view('home.show2',['fbcontents'=>$this->fbcontent->getWithUser($userid),'user'=>$this->user->find($userid),'preUrl'=>url()->previous()]);
     // }
 
 }

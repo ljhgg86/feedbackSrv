@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('reset', 'UserController@postReset')->name('user.reset');
     Route::get('user/createMB','UserController@createMB')->name('user.createMB');
     Route::post('user/updateMB','UserController@updateMB')->name('user.updateMB');
+    Route::post('user/searchMB','UserController@searchMB')->name('user.searchMB');
     Route::resource('user','UserController');
     Route::resource('role','RoleController');
     Route::resource('type','TypeController');
@@ -34,4 +35,4 @@ Route::group(['middleware' => ['auth']], function () {
 Auth::routes();
 
 Route::get('/home/{typeid?}', 'HomeController@index')->name('home');
-Route::get('/home/show/{id}', 'HomeController@show')->name('home.show');
+Route::get('/home/show/{userid}/{typeid}', 'HomeController@show')->name('home.show');

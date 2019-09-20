@@ -68,9 +68,10 @@ class FbcontentController extends Controller
         $status=$this->fbcontent->storeContent($request->all());
         $id=$request->input('user_id');
         $preUrl=$request->input('preUrl');
+        $typeid=$request->input('type_id');
         //return view('home.show2',['fbcontents'=>$this->fbcontent->getWithUser($id),'user'=>$this->user->find($id),'preUrl'=>$request->input('preUrl')]);
         //return redirect()->route('home.show',['user'=>$this->user->find($id),'preUrl'=>$preUrl]);
-        return view('home.show',['user'=>$this->user->find($id),'preUrl'=>$preUrl]);
+        return view('home.show',['user'=>$this->user->find($id),'typeid'=>$typeid,'preUrl'=>$preUrl]);
     }
 
     /**
@@ -132,9 +133,10 @@ class FbcontentController extends Controller
     public function getFbcontents(Request $request){
         $userid=$request->input('userid');
         $page=$request->input('page');
+        $typeid=$request->input('typeid');
         return response()->json([
             'status'=>true,
-            'fbContents'=>$this->fbcontent->getWithUser1($userid,$page)
+            'fbContents'=>$this->fbcontent->getWithUser1($userid,$page,$typeid)
         ]);
     }
 
@@ -148,20 +150,20 @@ class FbcontentController extends Controller
         $userid=$user->id;
         $page=$tmp['page'];
         if($page==0){
-            $this->fbcontent->updateReadflagApi($userid);
+            $this->fbcontent->updateReadflagApi($userid,$tmp['typeid']);
         }
         return response()->json([
             'status'=>true,
             'user'=>$user,
-            'fbContents'=>$this->fbcontent->getWithUser1($userid,$page)
+            'fbContents'=>$this->fbcontent->getWithUser1($userid,$page,$tmp['typeid'])
         ]);
     }
     //get FbcontentsApiAdmin
-    public function getFbcontentsApiAdmin($id,$page){
-        $this->fbcontent->updateReadflag($id);
+    public function getFbcontentsApiAdmin($typeid,$id,$page){
+        $this->fbcontent->updateReadflag($id,$typeid);
         return response()->json([
             'status'=>true,
-            'fbContents'=>$this->fbcontent->getWithUser1($id,$page)
+            'fbContents'=>$this->fbcontent->getWithUser1($id,$page,$typeid)
         ]);
     }
     //store fbcontent Api

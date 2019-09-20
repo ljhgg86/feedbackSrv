@@ -16,6 +16,13 @@ class Type extends Model
         return $this->hasMany('App\Models\Fbcontent','type_id','id');
     }
     public function users(){
-        return $this->belongsToMany('App\Models\users', 'type_users', 'type_id', 'user_id');
+        return $this->belongsToMany('App\Models\User', 'type_users','type_id','user_id');
+    }
+    public function notices(){
+        return $this->hasMany('App\Models\Notice','type_id','id');
+    }
+    public function getTypes(){
+        return $this->where('delflag',0)
+                    ->get();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Notice;
+use App\Models\Type;
 use Response;
 
 class NoticeController extends Controller
@@ -35,7 +36,8 @@ class NoticeController extends Controller
     public function create()
     {
         $notice=new Notice();
-        return view('notice.edit')->with('notice',$notice);
+        $types = Type::where('delflag',0)->get();
+        return view('notice.edit')->with(['notice'=>$notice,'types'=>$types]);
     }
 
     /**
@@ -50,10 +52,12 @@ class NoticeController extends Controller
             'title' => 'required|string|max:50',
             'detail' => 'required|string|max:500',
         ]);
+        var_dump($request->all());
         $notice=Notice::create([
             'title'=>$request->input('title'), 
             'detail'=>$request->input('detail'),
-            'showtop'=>$request->input('showtop')
+            'showtop'=>$request->input('showtop'),
+            'type_id'=>$request->input('type')
         ]);
         return redirect('/notice')
                         ->withSuccess("公告新建成功.");
@@ -79,8 +83,10 @@ class NoticeController extends Controller
     public function edit($id)
     {
         $notice=Notice::where('id',$id)
+                ->with(['type'])
                 ->first();
-        return view('notice.edit')->with('notice',$notice);
+         $types = Type::where('delflag',0)->get();
+        return view('notice.edit')->with(['notice'=>$notice,'types'=>$types]);
     }
 
     /**
@@ -100,6 +106,7 @@ class NoticeController extends Controller
         $notice->title=$request->input('title');
         $notice->detail=$request->input('detail');
         $notice->showtop=$request->input('showtop');
+        $notice->type_id=$request->input('type');
         $notice->save();
         return redirect("/notice/$id/edit")
                         ->withSuccess("公告更新成功.");
@@ -120,8 +127,9 @@ class NoticeController extends Controller
     }
 
     /*get showtop notice*/
-    public function getShowtop(){
-        $noticeArray=json_decode($this->notice->getShowtop(),true);
+    public function getShowtop($typeid){
+        $temp_array = array();
+        $noticeArray=json_decode($this->notice->getShowtop(intval($typeid)),true);
         foreach($noticeArray as $notice){
             $notice = join(" ",$notice);
             $temp_array[] = $notice;
@@ -129,10 +137,10 @@ class NoticeController extends Controller
         return implode(" ",$temp_array);
     }
     /*get notice list*/
-    public function getNoticeList(){
+    public function getNoticeList($typeid){
         return response()->json([
             'status'=>true,
-            'noticelist'=>$this->notice->getNotice()
+            'noticelist'=>$this->notice->getNotice(intval($typeid))
         ]);
     }
     /*get the notice infomation*/

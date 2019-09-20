@@ -13,12 +13,15 @@
                 <table class="table table-hover">
                     <caption>{{ config('feedback.feedbacklist') }}</caption>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{$currentTypeName}}
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ route('home' , ['typeid'=>0]) }}">全部</a>
+                                    </li>
                                     @foreach($types as $type)
                                     <li>
                                         <a href="{{ route('home' , ['typeid'=>$type->id]) }}">{{$type->name}}</a>
@@ -27,7 +30,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-9">
                             <form role="form">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="搜索内容">
@@ -67,7 +70,7 @@
                                     @endif
                                 </td>
                                 <td> 
-                                    <a class="btn btn-xs btn-primary" href="{{ route('home.show' , ['id'=>$fblist->user_id]) }}"> 查看
+                                    <a class="btn btn-xs btn-primary" href="{{ route('home.show' , ['userid'=>$fblist->user_id,'typeid'=>$fblist->type_id]) }}"> 查看
                                     </a>
                                 </td>
                             </tr>

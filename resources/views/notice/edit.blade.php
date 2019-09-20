@@ -33,6 +33,30 @@
                                 <textarea class="form-control" rows="3" name="detail">{{ $notice->detail }}</textarea>
                             
                         </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="type">
+                                {{ config('feedback.notice') }}类型
+                            </label>
+                            <select class="form-control" name="type">
+                                @foreach($types as $type)
+                                @if($notice->type)
+                                    @if(intval($type->id)==intval($notice->type->id))
+                                    <option value={{$type->id}} selected>{{$type->name}}</option>
+                                    @else
+                                    <option value={{$type->id}}>{{$type->name}}</option>
+                                    @endif
+                                @else
+                                    @if(intval($type->id)==1)
+                                    <option value={{$type->id}} selected>{{$type->name}}</option>
+                                    @else
+                                    <option value={{$type->id}}>{{$type->name}}</option>
+                                    @endif
+                                @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        
                         <div class="form-group">
                             <label for="showtop" class="col-md-2 control-label">
                                 首页展示

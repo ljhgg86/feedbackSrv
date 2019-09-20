@@ -17,6 +17,7 @@
                         <input type="hidden" name="user_id" id="user_id" value={{ $user->id }}>
                         <input type="hidden" name="admin_id" value={{ Auth::id() }}>
                         <input type="hidden" name="preUrl" value={{ $preUrl }}>
+                        <input type="hidden" name="type_id" value={{ $typeid }}>
                         <div class="form-group">
                             <textarea class="form-control" rows="3" name="content"></textarea>
                         </div>
@@ -118,9 +119,10 @@
                 async:false,
                 cache:false
             });
-            $.ajax({url:'../../fbcontent/getFbcontents',
+            $.ajax({url:'../../../fbcontent/getFbcontents',
                     type:'post',
                     data:{userid:$('input[name=user_id]').val(),
+                        typeid:$('input[name=type_id]').val(),
                             page:page++},
                     dataType:'json',
                     success:function(data){

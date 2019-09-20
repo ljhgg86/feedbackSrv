@@ -42,7 +42,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Fbcontent','user_id','id');
     }
     public function types(){
-        return $this->belongsToMany('App\Models\types', 'type_users', 'user_id', 'type_id');
+        return $this->belongsToMany('App\Models\Type', 'type_users','user_id','type_id');
     }
 
     //is superadmin
@@ -79,6 +79,8 @@ class User extends Authenticatable
         return $this->where('id',$id)
                     ->with(['role'=>function($query){
                         $query->where('delflag',0);
+                    },'types'=>function($query){
+                        $query->where('delflag',0);
                     }])
                     ->first();
     }
@@ -94,16 +96,23 @@ class User extends Authenticatable
 
     //search user by the name
     public function searchByName($name){
-        return $this->where('name',$name)->first();
+        return $this->where('name',$name)
+                    ->with(['role'=>function($query){
+                        $query->where('delflag',0);
+                    },'types'=>function($query){
+                        $query->where('delflag',0);
+                    }])
+                    ->first();
     }
 
     //get user list with feedback by datetime desc
-    public function getUsersWithFbs($page){
+    public function getUsersWithFbs($typeid,$page){
         $showByAdmin = config('feedback.showByAdmin');
         $fblists=DB::table('users')
                 ->join('fbcontent','users.id','=','fbcontent.user_id')
                 ->where('fbcontent.admin_id',0)
                 ->where('fbcontent.delflag',0)
+                ->where('fbcontent.type_id',$typeid)
                 ->select(DB::raw('MAX(fbcontent.id) as id,count(if(readflag=0 and admin_id=0,true,null)) as count, user_id,name,nickname,fbcontent.content,fbcontent.imgflag,fbcontent.videoflag,fbcontent.created_at'))
                 ->groupBy('user_id')
                 ->orderBy('id','desc')
@@ -114,10 +123,11 @@ class User extends Authenticatable
     }
 
     //get user list with feedback by datetime desc where has the keyword
-    public function searchWithFbs($keyword,$page){
+    public function searchWithFbs($typeid,$keyword,$page){
         $showByAdmin = config('feedback.showByAdmin');
         $fblists=DB::table('users')
                 ->join('fbcontent','users.id','=','fbcontent.user_id')
+                ->where('fbcontent.type_id',$typeid)
                 ->where(function($query) use($keyword){
                     $query->where('users.name','like','%'.$keyword.'%')
                         ->orWhere('users.nickname','like','%'.$keyword.'%')
@@ -145,4 +155,21 @@ class User extends Authenticatable
                     }])
                     ->get();
     }
+    
+    /**
+     * get all typeids of the name
+     */
+    public function getTypeidsByName($name){
+        $userinfo =  $this->where('name',$name)
+                            ->with(['types'=>function($query){
+                                $query->where('delflag',0);
+                            }])
+                            ->first();
+        $typeids = array();
+        foreach($userinfo->types as $userType){
+            array_push($typeids,$userType->pivot->type_id);
+        }
+        return $typeids;
+    }
+
 }

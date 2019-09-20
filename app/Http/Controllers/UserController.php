@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Type;
+use App\Models\Type_users;
 use App\Models\Fbcontent;
 use Response;
 use DB;
@@ -17,6 +19,7 @@ class UserController extends Controller
     {
         $this->user=new User();
         $this->role=new Role();
+        $this->type=new Type();
     }
     /**
      * Display a listing of the resource.
@@ -37,7 +40,7 @@ class UserController extends Controller
     {
         $user=new User();
         $user->role=new Role();
-        return view('user.edit',['user'=>$user,'roles'=>$this->role->getRoles()]);
+        return view('user.edit',['user'=>$user,'roles'=>$this->role->getRoles(),'types'=>$this->type->getTypes()]);
     }
 
     //create Mobile admin
@@ -97,7 +100,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return view('user.edit',['user'=>$this->user->getUser($id),'roles'=>$this->role->getRoles()]);
+        return view('user.edit',['user'=>$this->user->getUser($id),'roles'=>$this->role->getRoles(),'types'=>$this->type->getTypes()]);
     }
 
     /**
@@ -123,14 +126,24 @@ class UserController extends Controller
     */
     public function updateMB(Request $request)
     {
-        $user=$this->user->searchByName($request->input('mobile'));
-        if(!$user){
-            return view('user.createMB',['tip'=>'该用户不存在,请先在app注册！']);
-        }
-        $roleid=($user->role_id==config('feedback.userRole')) ? 
-                    config('feedback.mbRole') : config('feedback.userRole');
+        // $user=$this->user->searchByName($request->input('mobile'));
+        // if(!$user){
+        //     return view('user.createMB',['tip'=>'该用户不存在,请先在app注册！']);
+        // }
+        // $roleid=($user->role_id==config('feedback.userRole')) ? 
+        //             config('feedback.mbRole') : config('feedback.userRole');
+        $id = intval($request->input('id'));
+        $user = User::find($id);
+        $roleid = $request->input('role');
         $user->role_id = $roleid;
         $user->save();
+        $typeids = $request->input('types');
+        Type_users::where('user_id',$user->id)->delete();
+        if($roleid == 3){
+            foreach($typeids as $typeid){
+                Type_users::create(['type_id'=>$typeid,'user_id'=>$user->id]);
+            }
+        }
         return redirect()->route('user.showAdmin');
     }
 
@@ -143,6 +156,12 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function searchMB(Request $request){
+        $user=$this->user->searchByName($request->input('mobile'));
+        $typeids=$this->user->getTypeidsByName($request->input('mobile'));
+        return view('user.editMB',['user'=>$user,'types'=>$this->type->getTypes(),'typeids'=>$typeids]);
     }
 
     /**
@@ -203,18 +222,18 @@ class UserController extends Controller
 
 
     //show user's feedbacks to mobile admin
-    public function showFbs($page){
+    public function showFbs($typeid,$page){
         return response()->json([
             'status'=>true,
-            'fblists'=>$this->user->getUsersWithFbs($page)
+            'fblists'=>$this->user->getUsersWithFbs($typeid,$page)
         ]);
     }
 
     //show user's feedbacks to mobile admin where has keyword
-    public function searchFbs($keyword,$page){
+    public function searchFbs($typeid,$keyword,$page){
         return response()->json([
             'status'=>true,
-            'fblists'=>$this->user->searchWithFbs($keyword,$page)
+            'fblists'=>$this->user->searchWithFbs($typeid,$keyword,$page)
         ]);
     }
 
@@ -235,4 +254,15 @@ class UserController extends Controller
         }
         
     }
+    
+    /**
+     * get all typeids of the name
+     */
+    public function getTypeidsByName($name){
+        return response()->json([
+            'status'=>true,
+            'typeids'=>$this->user->getTypeidsByName($name)
+        ]);
+    }
+
 }

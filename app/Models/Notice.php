@@ -12,19 +12,25 @@ class Notice extends Model
         'title',
         'detail',
         'showtop',
-        'delflag'
+        'delflag',
+        'type_id'
     ];
+    public function type(){
+        return $this->belongsTo('App\Models\Type','type_id');
+    }
     /*return all notice*/
-    public function getNotice(){
-    	$showNotice=config('feedback.showNotice');
-    	return $this->where('delflag',0)
-                    ->select(['id','title','showtop','created_at'])
+    public function getNotice($typeid){
+        $showNotice=config('feedback.showNotice');
+        return $this->where('delflag',0)
+                    ->where('type_id',$typeid)
+                    ->with(['type'])
                     ->orderBy('id','desc')
     				->paginate($showNotice);
     }
     /*get the showtop notice*/
-    public function getShowtop(){
+    public function getShowtop($typeid){
         return $this->where('delflag',0)
+                    ->where('type_id',$typeid)
                     ->where('showtop',1)
                     ->select(['title'])
                     ->orderBy('id','desc')

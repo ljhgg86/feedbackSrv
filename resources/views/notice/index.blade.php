@@ -22,6 +22,7 @@
                     <thead>
                         <tr>
                             <th>编号</th>
+                            <th>类型</th>
                             <th>{{ config('feedback.notice') }}标题</th>
                             <th data-sortable="false">操作</th>
                         </tr>
@@ -34,6 +35,7 @@
                                 <span class="label label-warning">展示</span>
                                 @endif
                             </td>
+                            <td>{{ $notice->type->name }}</td>
                             <td>{{ $notice->title }}</td>
                             <td>
                                 <a href="{{ route('notice.edit', $notice->id) }}" class="btn btn-xs btn-info">

@@ -17,15 +17,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/fbcontent/getFbcontentsApi/{id}/{page}','FbcontentController@getFbcontentsApiAdmin')->middleware('cors');
+Route::get('/fbcontent/getFbcontentsApi/{typeid}/{id}/{page}','FbcontentController@getFbcontentsApiAdmin')->middleware('cors');
 Route::post('/fbcontent/getFbcontentsApi','FbcontentController@getFbcontentsApi');
 Route::post('/fbcontent/storeApi','FbcontentController@storeApi');
 Route::post('/image/uploadApi', 'ImageController@uploadImgFileApi');
 Route::get('/user/searchByName/{name}','UserController@searchUserName')->middleware('cors');
-Route::get('/user/showFbs/{page}','UserController@showFbs')->middleware('cors');
-Route::get('/user/searchFbs/{keyword}/{page}','UserController@searchFbs')->middleware('cors');
+Route::get('/user/showFbs/{typeid}/{page}','UserController@showFbs')->middleware('cors');
+Route::get('/user/searchFbs/{typeid}/{keyword}/{page}','UserController@searchFbs')->middleware('cors');
 Route::get('/user/getReplyCounts/{name}','UserController@getReplyCounts')->middleware('cors');
-Route::get('/notice/getShowtop','NoticeController@getShowtop')->middleware('cors');
-Route::get('/notice/getNoticeList','NoticeController@getNoticeList')->middleware('cors');
+Route::get('/user/getTypeidsByName/{name}','UserController@getTypeidsByName')->middleware('cors');
+Route::get('/notice/getShowtop/{typeid}','NoticeController@getShowtop')->middleware('cors');
+Route::get('/notice/getNoticeList/{typeid}','NoticeController@getNoticeList')->middleware('cors');
 Route::get('/notice/getNoticeInfo/{id}','NoticeController@getNoticeInfo')->middleware('cors');
 Route::get('/fbcontent/delContent/{id}','FbcontentController@delContent')->middleware('cors');
