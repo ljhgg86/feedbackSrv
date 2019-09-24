@@ -22,7 +22,7 @@
                     <thead>
                         <tr>
                             <th>编号</th>
-                            <th>{{ config('feedback.type') }}标签</th>
+                            <th>{{ config('feedback.type') }}</th>
                             <th data-sortable="false">操作</th>
                         </tr>
                      </thead>
@@ -30,7 +30,7 @@
                     @foreach ($types as $type)
                         <tr>
                             <td>{{ $type->id }}</td>
-                            <td>{{ $type->name }}</td>
+                            <td>{{ $type->name }}<br>{{ "https://green.strtv.cn/feedbackClt/?typeid=".$type->id }}</td>
                             <td>
                                 <a href="{{ route('type.edit', $type->id) }}" class="btn btn-xs btn-info">
                                     编辑

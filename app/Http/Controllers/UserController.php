@@ -126,17 +126,12 @@ class UserController extends Controller
     */
     public function updateMB(Request $request)
     {
-        // $user=$this->user->searchByName($request->input('mobile'));
-        // if(!$user){
-        //     return view('user.createMB',['tip'=>'该用户不存在,请先在app注册！']);
-        // }
-        // $roleid=($user->role_id==config('feedback.userRole')) ? 
-        //             config('feedback.mbRole') : config('feedback.userRole');
         $id = intval($request->input('id'));
         $user = User::find($id);
         $roleid = $request->input('role');
         $user->role_id = $roleid;
         $user->save();
+
         $typeids = $request->input('types');
         Type_users::where('user_id',$user->id)->delete();
         if($roleid == 3){

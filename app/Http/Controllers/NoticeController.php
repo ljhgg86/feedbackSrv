@@ -24,7 +24,7 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $notices=$this->notice->getNotice();
+        $notices=$this->notice->getAllNotice();
         return view('notice.index')->with('notices',$notices);
     }
 
@@ -134,7 +134,13 @@ class NoticeController extends Controller
             $notice = join(" ",$notice);
             $temp_array[] = $notice;
         }
-        return implode(" ",$temp_array);
+        $type = Type::where('id',$typeid)->first();
+        //return implode(" ",$temp_array);
+        return response()->json([
+            'status'=>true,
+            'notices'=>implode(' ',$temp_array),
+            'type'=>$type
+        ]);
     }
     /*get notice list*/
     public function getNoticeList($typeid){

@@ -19,6 +19,14 @@ class Notice extends Model
         return $this->belongsTo('App\Models\Type','type_id');
     }
     /*return all notice*/
+    public function getAllNotice(){
+        $showNotice=config('feedback.showNotice');
+        return $this->where('delflag',0)
+                    ->with(['type'])
+                    ->orderBy('id','desc')
+    				->paginate($showNotice);
+    }
+    /**get notice */
     public function getNotice($typeid){
         $showNotice=config('feedback.showNotice');
         return $this->where('delflag',0)

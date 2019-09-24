@@ -11,7 +11,7 @@
                 @include('partials.errors')
                 @include('partials.success')
                 <form action="{{ route('user.updateMB') }}" method="POST" accept-charset="UTF-8">
-                    <input type="hidden" name="_method" value="PUT">
+                    {{--  <input type="hidden" name="_method" value="PUT">  --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="id" value={{$user->id}}>
                     <div class="form-group">
@@ -47,11 +47,11 @@
                         @foreach($types as $type)
                         @if(in_array($type->id,$typeids))
                         <div class="checkbox">
-                            <label><input type="checkbox" name="types" value={{$type->id}} checked>{{$type->name}}</label>
+                            <label><input type="checkbox" name="types[]" value={{$type->id}} checked>{{$type->name}}</label>
                         </div>
                         @else
                         <div class="checkbox">
-                            <label><input type="checkbox" name="types" value={{$type->id}}>{{$type->name}}</label>
+                            <label><input type="checkbox" name="types[]" value={{$type->id}}>{{$type->name}}</label>
                         </div>
                         @endif
                         @endforeach
