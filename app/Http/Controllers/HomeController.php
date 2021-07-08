@@ -38,7 +38,6 @@ class HomeController extends Controller
         //         ->groupBy('user_id')
         //         ->orderBy('id','desc')
         //         ->paginate(15);
-
         $fblists=DB::table('users')
                 ->join('fbcontent','users.id','=','fbcontent.user_id')
                 ->where('fbcontent.admin_id',0)
